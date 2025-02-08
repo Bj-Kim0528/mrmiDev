@@ -59,6 +59,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 gem 'concurrent-ruby', '1.3.4'
 gem 'devise'
 
+
+gem 'dotenv-rails'
 gem 'oauth2', '~> 2.0'
 gem 'omniauth-google-oauth2', github: 'zquestz/omniauth-google-oauth2'
 gem 'omniauth-facebook'
+gem 'omniauth-rails_csrf_protection'
