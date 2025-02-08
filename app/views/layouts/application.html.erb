@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MrmiDev</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <% if user_signed_in? %>
+    <p>환영합니다, <%= current_user.name || "게스트" %> 님!</p>
+    
+    <%= button_to "로그아웃", destroy_user_session_path, method: :delete, class: "btn btn-danger" %>
+  <% else %>
+    <%= link_to "로그인", new_user_session_path, class: "btn btn-primary" %>
+    <%= button_to "게스트 로그인", users_guest_sign_in_path, method: :post, class: "btn btn-warning" %>
+  <% end %>
+
+    <%= yield %>
+  </body>
+</html>
