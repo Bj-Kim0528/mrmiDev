@@ -65,3 +65,7 @@ gem 'oauth2', '~> 2.0'
 gem 'omniauth-google-oauth2', github: 'zquestz/omniauth-google-oauth2'
 gem 'omniauth-facebook'
 gem 'omniauth-rails_csrf_protection'
+
+
+gem 'letter_opener'
+gem 'letter_opener_web'

@@ -3,6 +3,7 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
+         :confirmable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
   # Omniauth 콜백을 통해 사용자 정보를 처리하는 클래스 메소드

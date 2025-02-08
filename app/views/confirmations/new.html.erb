@@ -1,0 +1,12 @@
+<h1>이메일 인증</h1>
+<p>회원가입 시 발송된 이메일에서 인증번호를 확인하고, 아래에 입력해주세요.</p>
+
+<%= form_with url: confirm_email_path, method: :post do |f| %>
+  <div class="field">
+    <%= f.label :confirmation_token, "인증번호" %><br />
+    <%= f.text_field :confirmation_token, autofocus: true %>
+  </div>
+  <div class="actions">
+    <%= f.submit "인증하기" %>
+  </div>
+<% end %>
