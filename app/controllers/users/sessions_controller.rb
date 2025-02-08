@@ -4,11 +4,11 @@ class Users::SessionsController < Devise::SessionsController
 
   def guest_sign_in
     user = User.guest
-    if user.present?
+    if user
       sign_in user
-      redirect_to root_path, notice: '게스트 로그인 되었습니다!'
+      redirect_to root_path, notice: "게스트 계정으로 로그인되었습니다."
     else
-      redirect_to new_user_session_path, alert: '게스트 로그인에 실패했습니다.'
+      redirect_to new_user_session_path, alert: "게스트 계정 생성에 실패했습니다."
     end
   end
 
