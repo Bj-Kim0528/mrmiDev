@@ -6,6 +6,8 @@ class User < ApplicationRecord
          :confirmable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
+  has_many :submissions, dependent: :destroy
+
   # Omniauth 콜백을 통해 사용자 정보를 처리하는 클래스 메소드
   def self.from_omniauth(access_token)
     data = access_token.info

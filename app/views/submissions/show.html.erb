@@ -1,0 +1,19 @@
+<p>
+  <strong>제목:</strong>
+  <%= @submission.title %>
+</p>
+
+<p>
+  <strong>내용:</strong>
+  <%= @submission.content %>
+</p>
+
+<% if @submission.image.attached? %>
+  <p>
+    <strong>첨부 이미지:</strong><br>
+    <%= image_tag url_for(@submission.image), style: "max-width: 300px; height: auto;" %>
+  </p>
+<% end %>
+
+<%= link_to 'Edit', edit_submission_path(@submission) %> |
+<%= link_to 'Back', submissions_path %>

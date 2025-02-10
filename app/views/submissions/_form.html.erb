@@ -1,0 +1,31 @@
+<%= form_for(@submission, html: { multipart: true }) do |f| %>
+  <% if @submission.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@submission.errors.count, "error") %> prohibited this submission from being saved:</h2>
+      <ul>
+        <% @submission.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title, "제목" %><br />
+    <%= f.text_field :title %>
+  </div>
+
+  <div class="field">
+    <%= f.label :content, "내용" %><br />
+    <%= f.text_area :content %>
+  </div>
+
+  <div class="field">
+    <%= f.label :image, "이미지 업로드" %><br />
+    <%= f.file_field :image %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "투고하기" %>
+  </div>
+<% end %>
