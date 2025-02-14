@@ -8,26 +8,35 @@ class User < ApplicationRecord
 
   has_many :submissions, dependent: :destroy
 
-  # Omniauth 콜백을 통해 사용자 정보를 처리하는 클래스 메소드
   def self.from_omniauth(access_token)
     data = access_token.info
-    # provider와 uid로 사용자를 검색합니다.
-    user = User.where(provider: access_token.provider, uid: access_token.uid).first
-    unless user
-      user = User.new(
-        email: data['email'],
-        password: Devise.friendly_token[0,20],
-        provider: access_token.provider,
-        uid: access_token.uid,
-        name: data['name']
-      )
-      # Google OAuth를 통해 가입하는 경우에는 이메일 인증을 건너뛰어 자동으로 confirmed 상태로 만듭니다.
-      if access_token.provider == "google_oauth2"
-        user.skip_confirmation!
+    provider = access_token.provider
+    uid = access_token.uid
+
+    # 먼저 provider와 uid로 기존 사용자를 찾습니다.
+    user = User.where(provider: provider, uid: uid).first
+
+    if user
+      # 이미 가입된 사용자가 있다면 그대로 반환
+      user
+    else
+      # 만약 없으면, 이메일로 사용자를 찾아봅니다.
+      user = User.find_by(email: data['email'])
+      if user
+        # 기존 계정이 있으나 provider, uid가 기록되지 않은 경우, 업데이트
+        user.update(provider: provider, uid: uid)
+        user
+      else
+        # 신규 사용자 객체를 초기화만 하고, 저장은 회원가입 폼에서 진행
+        User.new(
+          email: data['email'],
+          password: Devise.friendly_token[0,20],
+          provider: provider,
+          uid: uid,
+          name: data['name']
+        )
       end
-      user.save!
     end
-    user
   end
 
   def self.guest
