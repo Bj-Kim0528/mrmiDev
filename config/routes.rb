@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'rakuten_searches/index'
   resources :submissions
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: 'users/omniauth_callbacks' }
 
@@ -8,6 +9,7 @@ Rails.application.routes.draw do
     get 'users/sns_sign_up', to: 'users/registrations#sns_sign_up', as: :sns_sign_up
   end
 
+  resources :rakuten_searches, only: [:index]
 
   root to: 'home#index'
   

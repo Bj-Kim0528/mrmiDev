@@ -1,0 +1,33 @@
+<!-- app/views/rakuten_searches/index.html.erb -->
+<h1>검색 결과: <%= @keyword.presence || "아직 검색어가 없습니다" %></h1>
+
+<!-- app/views/rakuten_searches/index.html.erb -->
+<% if @items.any? %>
+  <div class="row">
+    <% @items.each do |item| %>
+      <% 
+        # Affiliate URL 이 없으면 일반 URL 로 대체
+        url = item['affiliateUrl'].present? ? item['affiliateUrl'] : item['itemUrl']
+        # mediumImageUrls.first 가 이미 문자열이므로 그대로 사용
+        img_src = item['mediumImageUrls'].first
+        title   = item['itemName']
+        price   = item['itemPrice']
+      %>
+      <div class="col-md-3 mb-4">
+        <div class="card h-100">
+          <%= link_to url, target: "_blank", rel: "noopener" do %>
+            <%= image_tag img_src, class: "card-img-top", alt: title %>
+            <div class="card-body">
+              <h5 class="card-title"><%= title %></h5>
+              <p class="card-text">¥<%= number_with_delimiter(price) %></p>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <!-- 페이징 등 생략 -->
+<% else %>
+  <p>검색어를 입력해 주세요.</p>
+<% end %>
+
