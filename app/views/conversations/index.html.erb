@@ -1,13 +1,20 @@
 <h1>채팅 목록</h1>
 
+<%= turbo_stream_from "conversations_#{current_user.id}" %>
+
 <ul class="conversation-list">
   <% @conversations.each do |conversation| %>
-    <% next if conversation.messages.empty? %>  <!-- 메시지 없으면 건너뜀 -->
+    <% next if conversation.messages.empty? %>
     <% other = conversation.users.find { |u| u != current_user } %>
-    <li>
+    <li id="<%= dom_id(conversation) %>" class="conversation-item">
       <%= link_to other.name, conversation_path(conversation) %>
-      <%= link_to "나가기", conversation_path(conversation),
-                  method: :delete, data: { confirm: "나가시겠습니까?" } %>
+      <p class="preview">
+        <%= conversation.messages.last.content.truncate(20) %>
+      </p>
+      <%= link_to "나가기",
+                  conversation_path(conversation),
+                  method: :delete,
+                  data: { confirm: "나가시겠습니까?" } %>
     </li>
   <% end %>
 </ul>
@@ -23,7 +30,7 @@
       <%= button_to "채팅 시작",
                     conversations_path(user_id: user.id),
                     method: :post,
-                    form_class: "start-chat-form" %>
+                    form_class: "start-chat-form" %>           
     </li>
   <% end %>
 </ul>

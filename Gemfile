@@ -70,3 +70,6 @@ gem 'rakuten_web_service'
 
 gem 'letter_opener'
 gem 'letter_opener_web'
+
+
+gem 'turbo-rails'

@@ -1,0 +1,13 @@
+<!-- app/views/conversations/_conversation_preview.html.erb -->
+<li id="<%= dom_id(conversation) %>" class="conversation-item">
+  <%# current_user 대신 viewer를 씁니다 %>
+  <% other = conversation.users.find { |u| u != viewer } %>
+  <%= link_to other.name, conversation_path(conversation) %>
+  <p class="preview">
+    <%= conversation.messages.last&.content.to_s.truncate(20) %>
+  </p>
+  <%= link_to "나가기",
+              conversation_path(conversation),
+              method: :delete,
+              data: { confirm: "나가시겠습니까?" } %>
+</li>
