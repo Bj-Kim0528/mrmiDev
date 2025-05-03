@@ -1,2 +1,10 @@
-<h1>Conversations#index</h1>
-<p>Find me in app/views/conversations/index.html.erb</p>
+<h1>채팅 목록</h1>
+
+<ul class="conversation-list">
+  <% @conversations.each do |conversation| %>
+    <% other = conversation.users.find { |u| u.id != current_user.id } %>
+    <li class="conversation-item">
+      <%= link_to other.name, conversation_path(other.id), class: "conversation-link" %>
+    </li>
+  <% end %>
+</ul>

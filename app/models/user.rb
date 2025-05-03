@@ -8,6 +8,9 @@ class User < ApplicationRecord
 
   has_many :submissions, dependent: :destroy
 
+  has_many :conversation_memberships, dependent: :destroy
+  has_many :conversations, through: :conversation_memberships
+
   def self.from_omniauth(access_token)
     data = access_token.info
     provider = access_token.provider

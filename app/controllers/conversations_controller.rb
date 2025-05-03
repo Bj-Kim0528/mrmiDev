@@ -2,7 +2,11 @@ class ConversationsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @conversations = current_user.conversations.includes(:users)
+    @conversations = current_user
+    .conversations
+    .joins(:messages)
+    .distinct
+    .includes(:users)
   end
 
   def show
