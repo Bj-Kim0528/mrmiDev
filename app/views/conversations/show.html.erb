@@ -1,0 +1,13 @@
+<!-- app/views/conversations/show.html.erb -->
+<h2>채팅</h2>
+
+<div id="messages" data-conversation-id="<%= @conversation.id %>">
+  <%= render @messages %>
+</div>
+
+<%= form_with model: [@conversation, Message.new],
+              local: false,
+              html: { id: "new_message_form" } do |f| %>
+  <%= f.text_field :content, placeholder: "메시지 입력...", autocomplete: "off" %>
+  <%= f.submit "전송" %>
+<% end %>
