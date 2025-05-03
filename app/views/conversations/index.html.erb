@@ -2,9 +2,28 @@
 
 <ul class="conversation-list">
   <% @conversations.each do |conversation| %>
-    <% other = conversation.users.find { |u| u.id != current_user.id } %>
-    <li class="conversation-item">
-      <%= link_to other.name, conversation_path(other.id), class: "conversation-link" %>
+    <% next if conversation.messages.empty? %>  <!-- 메시지 없으면 건너뜀 -->
+    <% other = conversation.users.find { |u| u != current_user } %>
+    <li>
+      <%= link_to other.name, conversation_path(conversation) %>
+      <%= link_to "나가기", conversation_path(conversation),
+                  method: :delete, data: { confirm: "나가시겠습니까?" } %>
+    </li>
+  <% end %>
+</ul>
+
+<hr>
+
+
+<h2>유저 목록</h2>
+<ul class="user-list">
+  <% User.where.not(id: current_user.id).each do |user| %>
+    <li class="user-item">
+      <span><%= user.name %></span>
+      <%= button_to "채팅 시작",
+                    conversations_path(user_id: user.id),
+                    method: :post,
+                    form_class: "start-chat-form" %>
     </li>
   <% end %>
 </ul>

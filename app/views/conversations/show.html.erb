@@ -1,13 +1,24 @@
-<!-- app/views/conversations/show.html.erb -->
-<h2>채팅</h2>
+<h2>채팅 <%= @other&.name %></h2>
+<%= link_to "채팅방 나가기",
+            conversation_path(@conversation),
+            method: :delete,
+            data: { confirm: "정말 나가시겠습니까?" },
+            class: "leave-chat-link" %>
+
+<hr>
+
 
 <div id="messages" data-conversation-id="<%= @conversation.id %>">
   <%= render @messages %>
 </div>
 
-<%= form_with model: [@conversation, Message.new],
-              local: false,
-              html: { id: "new_message_form" } do |f| %>
-  <%= f.text_field :content, placeholder: "메시지 입력...", autocomplete: "off" %>
-  <%= f.submit "전송" %>
-<% end %>
+
+
+<div id="new_message_form_wrapper">
+  <%= form_with model: [@conversation, Message.new],
+                local: false,
+                html: { id: "new_message_form" } do |f| %>
+    <%= f.text_field :content, placeholder: "메시지 입력...", autocomplete: "off" %>
+    <%= f.submit "전송" %>
+  <% end %>
+</div>

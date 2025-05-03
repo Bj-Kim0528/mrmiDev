@@ -19,6 +19,8 @@
       <%= link_to "로그인", new_user_session_path, class: "btn btn-primary" %>
       <%= button_to "게스트 로그인", users_guest_sign_in_path, method: :post, class: "btn btn-warning" %>
     <% end %>
+    <%= link_to "채팅 목록으로가기", conversations_path, class: "btn btn-secondary" %>
+    <%= link_to "홈으로 가기", root_path, class: "btn btn-secondary" %>
 
 
     <%= yield %>

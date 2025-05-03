@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     get 'users/sns_sign_up', to: 'users/registrations#sns_sign_up', as: :sns_sign_up
   end
 
-  resources :conversations, only: [:index, :show] do
+  resources :conversations, only: [:index, :show, :create, :destroy] do
     resources :messages, only: [:create]
   end
   mount ActionCable.server => '/cable'
