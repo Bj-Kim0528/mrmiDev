@@ -1,11 +1,21 @@
-<!-- app/views/conversations/_conversation_preview.html.erb -->
+
+<% last_message = conversation.messages.last %>
+
 <li id="<%= dom_id(conversation) %>" class="conversation-item">
-  <%# current_user 대신 viewer를 씁니다 %>
+  <%# 상대 찾기 %>
   <% other = conversation.users.find { |u| u != viewer } %>
   <%= link_to other.name, conversation_path(conversation) %>
-  <p class="preview">
-    <%= conversation.messages.last&.content.to_s.truncate(20) %>
-  </p>
+
+  <% if last_message %>
+    <% sender = last_message.user == viewer ? "나" : last_message.user.name %>
+    <p class="preview">
+      <strong><%= sender %>:</strong>
+      <%= last_message.content.truncate(20) %>
+    </p>
+  <% else %>
+    <p class="preview"><em>아직 메시지가 없습니다</em></p>
+  <% end %>
+
   <%= link_to "나가기",
               conversation_path(conversation),
               method: :delete,

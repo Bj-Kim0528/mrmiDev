@@ -2,22 +2,13 @@
 
 <%= turbo_stream_from "conversations_#{current_user.id}" %>
 
-<ul class="conversation-list">
+<ul id="conversations_#{current_user.id}" class="conversation-list">
   <% @conversations.each do |conversation| %>
-    <% next if conversation.messages.empty? %>
-    <% other = conversation.users.find { |u| u != current_user } %>
-    <li id="<%= dom_id(conversation) %>" class="conversation-item">
-      <%= link_to other.name, conversation_path(conversation) %>
-      <p class="preview">
-        <%= conversation.messages.last.content.truncate(20) %>
-      </p>
-      <%= link_to "나가기",
-                  conversation_path(conversation),
-                  method: :delete,
-                  data: { confirm: "나가시겠습니까?" } %>
-    </li>
+    <%= render partial: "conversations/conversation_preview",
+               locals: { conversation: conversation, viewer: current_user } %>
   <% end %>
 </ul>
+
 
 <hr>
 
