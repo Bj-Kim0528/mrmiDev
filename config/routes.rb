@@ -1,8 +1,4 @@
 Rails.application.routes.draw do
-  get 'messages/create'
-  get 'conversations/index'
-  get 'conversations/show'
-  get 'rakuten_searches/index'
   resources :submissions
   devise_for :users, controllers: { registrations: 'users/registrations', omniauth_callbacks: 'users/omniauth_callbacks' }
 

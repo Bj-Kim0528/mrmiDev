@@ -1,8 +1,10 @@
 <h1>채팅 목록</h1>
 
+
 <%= turbo_stream_from "conversations_#{current_user.id}" %>
 
-<ul id="conversations_#{current_user.id}" class="conversation-list">
+<ul id="conversations_<%= current_user.id %>" class="conversation-list"
+    data-user-id="<%= current_user.id %>">
   <% @conversations.each do |conversation| %>
     <%= render partial: "conversations/conversation_preview",
                locals: { conversation: conversation, viewer: current_user } %>
